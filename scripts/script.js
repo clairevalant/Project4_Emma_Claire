@@ -14,9 +14,9 @@ myApp.autoCompInput = new google.maps.places.Autocomplete(document.getElementByI
 google.maps.event.addListener(myApp.autoCompInput, "place_changed", function () {
     let place = myApp.autoCompInput.getPlace();
     console.log("lat:", place.geometry.location.lat());
-    let lat = place.geometry.location.lat();
+    myApp.lat = place.geometry.location.lat();
     console.log("lng", place.geometry.location.lng());
-    let lng = place.geometry.location.lng();
+    myApp.lng = place.geometry.location.lng();
 });
 
 
@@ -24,25 +24,58 @@ google.maps.event.addListener(myApp.autoCompInput, "place_changed", function () 
 myApp.getInput = function(){
     $("form").on("submit", function(event){
         event.preventDefault();
-        // send the value of the search input to getCoords
-        myApp.input = $("#autoComplete").val();
+        // get user date range / trip type (?) / unit toggle
+        myApp.startDate = new Date($("#startDate").val());
+        myApp.endDate = new Date($("#endDate").val());
+        console.log(myApp.startDate);
+        console.log(myApp.endDate);
+        
+        
+
+        if (myApp.startDate > myApp.endDate) { 
+            alert("Please enter a valid end date.");
+            // RESET END DATE CALENDAR TO DEFAULT
+        }
+
+        const sDate = myApp.startDate.getDate() + 1;
+        console.log(sDate);
+        const sMonth = myApp.startDate.getMonth() + 1;
+        console.log(sMonth);
+        const sYear = myApp.startDate.getFullYear();
+        console.log(sYear);
+        
+        const eDate = myApp.endDate.getDate() + 1;
+        console.log(eDate);
+        const eMonth = myApp.endDate.getMonth() + 1;
+        console.log(eMonth);
+        const eYear = myApp.endDate.getFullYear();
+        console.log(eYear);
+
+        
     });
 };
 
 // ----- Weather app API work begins here -----
 // Set date to variables
+// temporar!!!
 myApp.day = 20;
 myApp.month = 11;
 myApp.year = 2017;
 
+// change user dates to Epoch time for past five years, send to DarkSky
+myApp.setPreferences = function () {
 
-myApp.setLatLong = function () {
-    const latitude = 43.6532;
-    const longitude = 79.3832;
-    const units = "ca";
+    // toggle temperature units depending on user choice
+    if ($("input[name=tempUnits]:checked" === "ca")) {
+        myApp.units = "ca";
+    } else {
+        myApp.units = "us";
+    }
+
     const startDate = new Date(`${myApp.year}, ${myApp.month}, ${myApp.day}`).getTime() / 1000;
 
-    myApp.getTemp(latitude, longitude, units, startDate);
+    // pass info to weather API
+    myApp.getTemp(myApp.lat, myApp.lng, myApp.units, startDate);
 };
 
 myApp.getTemp = function(lat, long, u, t){
@@ -63,7 +96,7 @@ myApp.getTemp = function(lat, long, u, t){
 
 myApp.init = function(){
     myApp.getInput();
-    myApp.setLatLong();
+    myApp.setPreferences();
 };
 
 $(function(){

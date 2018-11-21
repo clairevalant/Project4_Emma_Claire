@@ -18,8 +18,21 @@
     <p>CLEMENTINE</p>
 
     <form action="">
+        <fieldset>
+            <label for="ca">Celsius</label>
+            <input id="ca" type="radio" name="tempUnits" checked="checked">
+            <label for="us">Farenheit</label>
+            <input id="us" type="radio" name="tempUnits">
+        </fieldset>
         <label for="autoComplete">DESTINATION</label>
-        <input id="autoComplete" type="search">
+        <input id="autoComplete" type="search" required>
+
+        <label for="startDate">Start Date</label>
+        <input id="startDate" type="date" required>
+
+        <label for="endDate">End Date</label>
+        <input id="endDate" type="date" required>
+
         <input id="submit" type="submit">
     </form>
 
