@@ -61,7 +61,7 @@ myApp.getInput = function(){
         
 
         // initialize loop date to previous year
-        let current = startEpoch - 31536000;
+        let current = startEpoch;
 
         // initialize arrays for max and min temps for past five years on specified date
         myApp.historyTempMin = [];
@@ -86,23 +86,14 @@ myApp.getInput = function(){
             dayIncrement = 86400 * 3;
             numDays = Math.floor((endEpoch - startEpoch) / dayIncrement);
         }
-
-        // set how many days we take in the trip duration
-        
-
-
-     
-       
-        console.log("day inc",dayIncrement);
-        console.log("numdays", numDays);
-        
-        
-
+    
         // for each day in the trip
         for (let j = 0; j < numDays; j++) {
+            console.log(j);
             
             // retrieve temperature for the past five years
             for (let i = 0; i < 5; i++) {
+                
                 myApp.getTemp(myApp.lat, myApp.lng, units, current);
                 // subract one Epoch year
                 current = current - 31536000;
