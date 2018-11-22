@@ -46,24 +46,19 @@ myApp.getInput = function(){
         }
 
         const sDate = myApp.startDate.getDate() + 1;
-        console.log(sDate);
         const sMonth = myApp.startDate.getMonth() + 1;
-        console.log(sMonth);
         let sYear = myApp.startDate.getFullYear();
-        console.log(sYear);
+    
         
         const eDate = myApp.endDate.getDate() + 1;
-        console.log(eDate);
         const eMonth = myApp.endDate.getMonth() + 1;
-        console.log(eMonth);
         let eYear = myApp.endDate.getFullYear();
-        console.log(eYear);
+    
 
         // change user dates to Epoch time for past five years, send to DarkSky
         let startEpoch = new Date(`${sYear}, ${sMonth}, ${sDate}`).getTime() / 1000;
-        console.log("start epoch", startEpoch);
-        
         let endEpoch = new Date(`${eYear}, ${eMonth}, ${eDate}`).getTime() / 1000;
+        
 
         // initialize loop date to previous year
         let current = startEpoch - 31536000;
@@ -72,18 +67,35 @@ myApp.getInput = function(){
         myApp.historyTempMin = [];
         myApp.historyTempMax = [];
 
-        // recursively check max and min temperatures for the duration of the trip, for the past five years
-        
-        // difference in days in ephoch time
-        
-        let numDays = endEpoch - startEpoch ;
-        console.log(startEpoch, endEpoch);
-        console.log(numDays);
+        // how many days we increment by in algorithm (longer trips: every few days)
+        let dayIncrement = 86400;
 
+        // set how many days we take in the trip duration
+        let numDays = Math.floor((endEpoch - startEpoch) / dayIncrement);
 
+        // handling for "0" days
         if (numDays <= 1) {
             numDays = 2;
         }
+        // only look at every other day for high numDays
+        if (numDays > 7 && numDays <= 15) {
+            dayIncrement = 86400 * 2;
+            numDays = Math.floor((endEpoch - startEpoch) / dayIncrement);
+        }
+        if (numDays > 15) {
+            dayIncrement = 86400 * 3;
+            numDays = Math.floor((endEpoch - startEpoch) / dayIncrement);
+        }
+
+        // set how many days we take in the trip duration
+        
+
+
+     
+       
+        console.log("day inc",dayIncrement);
+        console.log("numdays", numDays);
+        
         
 
         // for each day in the trip
@@ -97,7 +109,7 @@ myApp.getInput = function(){
                 console.log(current);
             }
             // add one Epoch day, add Epoch five years
-            current = current + 86400 + (5 * 31536000);
+            current = current + dayIncrement + (5 * 31536000);
         }
         
         console.log("TempMax",myApp.historyTempMax);
