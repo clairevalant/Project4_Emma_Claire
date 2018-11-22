@@ -24,12 +24,20 @@ google.maps.event.addListener(myApp.autoCompInput, "place_changed", function () 
 myApp.getInput = function(){
     $("form").on("submit", function(event){
         event.preventDefault();
+
+        // toggle temperature units depending on user choice
+        if ($("input[value=ca]:checked").val() === "ca") {
+            units = "ca";
+        } else {
+            units = "us";
+        }
+        console.log(units);
+
         // get user date range / trip type (?) / unit toggle
         myApp.startDate = new Date($("#startDate").val());
         myApp.endDate = new Date($("#endDate").val());
         console.log(myApp.startDate);
         console.log(myApp.endDate);
-        
         
 
         if (myApp.startDate > myApp.endDate) { 
@@ -51,34 +59,29 @@ myApp.getInput = function(){
         const eYear = myApp.endDate.getFullYear();
         console.log(eYear);
 
+        // change user dates to Epoch time for past five years, send to DarkSky
+        // const startEpoch = new Date(`${sYear}, ${sMonth}, ${sDate}`).getTime() / 1000;
+        const endEpoch = new Date(`${eYear}, ${eMonth}, ${eDate}`).getTime() / 1000;
+
+        // recursively check max and min temperatures for the duration of the trip, for the past five years
+        for (let i = 0; i < 5; i++) {
+            let startEpoch = new Date(`${sYear - 1}, ${sMonth}, ${sDate}`).getTime() / 1000;
+            myApp.getTemp(myApp.lat, myApp.lng, units, startEpoch);
+            sYear--;
+        }
+
         
     });
 };
 
 // ----- Weather app API work begins here -----
 // Set date to variables
-// temporar!!!
-myApp.day = 20;
-myApp.month = 11;
-myApp.year = 2017;
-
-// change user dates to Epoch time for past five years, send to DarkSky
-myApp.setPreferences = function () {
-
-    // toggle temperature units depending on user choice
-    if ($("input[name=tempUnits]:checked" === "ca")) {
-        myApp.units = "ca";
-    } else {
-        myApp.units = "us";
-    }
-
-    const startDate = new Date(`${myApp.year}, ${myApp.month}, ${myApp.day}`).getTime() / 1000;
-
-    // pass info to weather API
-    myApp.getTemp(myApp.lat, myApp.lng, myApp.units, startDate);
-};
 
 myApp.getTemp = function(lat, long, u, t){
+    // initialize arrays for max and min temps for past five years on specified date
+    const historyTempMin = [];
+    const histtoryTempMax = [];
+
     $.ajax({
         url: `https://api.darksky.net/forecast/${myApp.weatherKey}/${lat},${long},${t}`,
         dataType: "jsonp",
@@ -86,17 +89,17 @@ myApp.getTemp = function(lat, long, u, t){
         data:{
             format:"jsonp",
             key: myApp.weatherKey,
-            units: u,
-            timezone: "Canada/Eastern",
+            units: u
         }
     }).then(res => {
-        console.log(res);
-    })
-}
+        console.log(res.daily.data[0].temperatureMin);
+        console.log(res.daily.data[0].temperatureMax);
+        
+    });
+};
 
 myApp.init = function(){
     myApp.getInput();
-    myApp.setPreferences();
 };
 
 $(function(){
