@@ -49,38 +49,66 @@ myApp.getInput = function(){
         console.log(sDate);
         const sMonth = myApp.startDate.getMonth() + 1;
         console.log(sMonth);
-        const sYear = myApp.startDate.getFullYear();
+        let sYear = myApp.startDate.getFullYear();
         console.log(sYear);
         
         const eDate = myApp.endDate.getDate() + 1;
         console.log(eDate);
         const eMonth = myApp.endDate.getMonth() + 1;
         console.log(eMonth);
-        const eYear = myApp.endDate.getFullYear();
+        let eYear = myApp.endDate.getFullYear();
         console.log(eYear);
 
         // change user dates to Epoch time for past five years, send to DarkSky
-        // const startEpoch = new Date(`${sYear}, ${sMonth}, ${sDate}`).getTime() / 1000;
-        const endEpoch = new Date(`${eYear}, ${eMonth}, ${eDate}`).getTime() / 1000;
+        let startEpoch = new Date(`${sYear}, ${sMonth}, ${sDate}`).getTime() / 1000;
+        console.log("start epoch", startEpoch);
+        
+        let endEpoch = new Date(`${eYear}, ${eMonth}, ${eDate}`).getTime() / 1000;
+
+        // initialize loop date to previous year
+        let current = startEpoch - 31536000;
+
+        // initialize arrays for max and min temps for past five years on specified date
+        myApp.historyTempMin = [];
+        myApp.historyTempMax = [];
 
         // recursively check max and min temperatures for the duration of the trip, for the past five years
-        for (let i = 0; i < 5; i++) {
-            let startEpoch = new Date(`${sYear - 1}, ${sMonth}, ${sDate}`).getTime() / 1000;
-            myApp.getTemp(myApp.lat, myApp.lng, units, startEpoch);
-            sYear--;
-        }
-
         
+        // difference in days in ephoch time
+        
+        let numDays = endEpoch - startEpoch ;
+        console.log(startEpoch, endEpoch);
+        console.log(numDays);
+
+
+        if (numDays <= 1) {
+            numDays = 2;
+        }
+        
+
+        // for each day in the trip
+        for (let j = 0; j < numDays; j++) {
+            
+            // retrieve temperature for the past five years
+            for (let i = 0; i < 5; i++) {
+                myApp.getTemp(myApp.lat, myApp.lng, units, current);
+                // subract one Epoch year
+                current = current - 31536000;
+                console.log(current);
+            }
+            // add one Epoch day, add Epoch five years
+            current = current + 86400 + (5 * 31536000);
+        }
+        
+        console.log("TempMax",myApp.historyTempMax);
+        console.log("TempMin", myApp.historyTempMin);
+
     });
 };
 
 // ----- Weather app API work begins here -----
-// Set date to variables
 
 myApp.getTemp = function(lat, long, u, t){
-    // initialize arrays for max and min temps for past five years on specified date
-    const historyTempMin = [];
-    const histtoryTempMax = [];
 
     $.ajax({
         url: `https://api.darksky.net/forecast/${myApp.weatherKey}/${lat},${long},${t}`,
@@ -92,9 +120,9 @@ myApp.getTemp = function(lat, long, u, t){
             units: u
         }
     }).then(res => {
-        console.log(res.daily.data[0].temperatureMin);
-        console.log(res.daily.data[0].temperatureMax);
-        
+        // push max and min temps for that day
+        myApp.historyTempMin.push(res.daily.data[0].temperatureMin);
+        myApp.historyTempMax.push(res.daily.data[0].temperatureMax);
     });
 };
 
