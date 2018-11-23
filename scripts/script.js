@@ -3,6 +3,17 @@
 // declare app object
 const myApp = {};
 
+//initialize firebase
+var config = {
+    apiKey: "AIzaSyBdXX6NvtwcyMfsZrVgtDNfzzeNQYGWBVQ",
+    authDomain: "project4-4984b.firebaseapp.com",
+    databaseURL: "https://project4-4984b.firebaseio.com",
+    projectId: "project4-4984b",
+    storageBucket: "",
+    messagingSenderId: "220890597075"
+};
+firebase.initializeApp(config);
+
 // store our api keys for weather and google places
 myApp.weatherKey = "939526212d6d03b772f203915ea5ef22";
 
@@ -146,21 +157,74 @@ myApp.outputHistoricalData = function () {
     console.log("TempMax", myApp.historyTempMax);
     console.log("TempMin", myApp.historyTempMin);
     console.log("TempAvg", myApp.historyTempAvg);
-    console.log(myApp.historyTempMax[0]);
-    // setTimeout(() => { console.log(myApp.historyTempMax[0]) }, 2000);
 
-    myApp.getAverageTemp(myApp.historyTempMax);
-    myApp.getAverageTemp(myApp.historyTempMin);
+    myApp.getAverageTempMax(myApp.historyTempMax);
+
+
+};
+
+//function for average max temperature
+myApp.getAverageTempMax = function (calcArray) {
+    //calculate the average temperature of the whole array rounded to two decimal points.
+    myApp.avgMaxTemp = (calcArray.reduce((a, b) => a + b, 0) / calcArray.length).toFixed(2);
+
+    $('.results').append(`<h3 class="tempMax">Max Temperature ${myApp.avgMaxTemp}</h3>`);
+    //call the firebase api to figure out what to add to the packing list
+    // myApp.getClothing();
+    myApp.getAverageTempMin(myApp.historyTempMin);
+};
+
+//function for average min temperature
+myApp.getAverageTempMin = function (calcArray) {
+    //calculate the average temperature of the whole array rounded to two decimal points.
+    myApp.avgMinTemp = (calcArray.reduce((a, b) => a + b, 0) / calcArray.length).toFixed(2);
+
+    $('.results').append(`<h3 class="tempMin">Min Temperature ${myApp.avgMinTemp}</h3>`);
+    //call the firebase api to figure out what to add to the packing list
+
     myApp.getAverageTemp(myApp.historyTempAvg);
 };
 
+//function for average temperature
 myApp.getAverageTemp = function (calcArray) {
+    //calculate the average temperature of the whole array rounded to two decimal points.
+    myApp.avgArray = (calcArray.reduce((a, b) => a + b, 0) / calcArray.length).toFixed(2);
 
-    const avgArray = calcArray.reduce((a, b) => a + b, 0) / calcArray.length;
-
-    $('.outputData').append(`<h3 class="tempMin">${avgArray}</h3>`);
+    $('.results').append(`<h3 class="avgTemp">Average daily temperature ${myApp.avgArray}</h3>`);
+    //call the firebase api to figure out what to add to the packing list
+    myApp.weatherCalc();
 };
 
+myApp.weatherCalc = function () {
+    myApp.climate = "";
+    //very cold weather
+    if ((myApp.avgMinTemp > 0 && myApp.avgMinTemp < 5) && (myApp.avgMaxTemp >= 5 && myApp.avgMaxTemp < 10)) {
+        myApp.climate = "veryColdPlace";
+    }
+    //cold weather
+    else if ((myApp.avgMinTemp >= 5 && myApp.avgMinTemp < 10) && (myApp.avgMaxTemp >= 10 && myApp.avgMaxTemp < 20)) {
+        myApp.climate = "coldPlace";
+    } else if ((myApp.avgMinTemp > 10 && myApp.avgMinTemp < 15) && (myApp.avgMaxTemp >= 15 && myApp.avgMaxTemp < 30)) {
+        //warm weather
+        myApp.climate = "hotPlace";
+    }
+    //pass the climate weather into the getClothing function
+    myApp.getClothing(myApp.climate);
+};
+
+//the getClothing function retrieves the appropriate clothing from firebase!
+myApp.getClothing = function () {
+    const dbRef = firebase.database().ref(`/${myApp.climate}/genderNeutral`);
+    //what does 'value' mean?
+    dbRef.on('value', (data) => {
+        console.log(data.val());
+        myApp.wardrobe = data.val();
+        // list the wardrobe items from firebase for the specified climate.
+        for (key in myApp.wardrobe) {
+            $('.wardrobeList').append(`<li>${myApp.wardrobe[key]}</li>`);
+        }
+    });
+};
 
 // ----- Weather app API work begins here -----
 
