@@ -202,9 +202,9 @@ myApp.weatherCalc = function () {
         myApp.climate = "veryColdPlace";
     }
     //cold weather
-    else if ((myApp.avgMinTemp > 0 && myApp.avgMinTemp < 10) && (myApp.avgMaxTemp >= 10 && myApp.avgMaxTemp < 20)) {
+    else if ((myApp.avgMinTemp >= 5 && myApp.avgMinTemp < 10) && (myApp.avgMaxTemp >= 10 && myApp.avgMaxTemp < 20)) {
         myApp.climate = "coldPlace";
-    } else if ((myApp.avgMinTemp > 10 && myApp.avgMinTemp < 20) && (myApp.avgMaxTemp >= 20 && myApp.avgMaxTemp < 30)) {
+    } else if ((myApp.avgMinTemp > 10 && myApp.avgMinTemp < 15) && (myApp.avgMaxTemp >= 15 && myApp.avgMaxTemp < 30)) {
         //warm weather
         myApp.climate = "hotPlace";
     }
