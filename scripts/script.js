@@ -22,14 +22,15 @@ google.maps.event.addListener(myApp.autoCompInput, "place_changed", function () 
 
 
 // prevent the default on form submit and get value of input
-myApp.getInput = function(){
-    $("form").on("submit", function(event){
+myApp.getInput = function () {
+    $("form").on("submit", function (event) {
         event.preventDefault();
-        myApp.collectFormData();     
+        myApp.collectFormData();
     }
-)};
+    )
+};
 
-myApp.collectFormData = function(){
+myApp.collectFormData = function () {
     // toggle temperature units depending on user choice
     if ($("input[value=ca]:checked").val() === "ca") {
         units = "ca";
@@ -70,15 +71,17 @@ myApp.collectFormData = function(){
 
     // call function to start retrieving historical data from Dark Sky API
     myApp.getTripDuration(startEpoch, endEpoch, current);
-};     
-        
-        
-        
+};
+
+
+
 myApp.getTripDuration = function (startEpoch, endEpoch, current) {
-    
+
     // initialize arrays for max and min temps for past five years on specified date
     myApp.historyTempMin = [];
     myApp.historyTempMax = [];
+    // the historyTempAvg array adds the max and min temperature and divides by two.
+    myApp.historyTempAvg = [];
 
     // how many days we increment by in algorithm (longer trips: every few days)
     let dayIncrement = 86400;
@@ -105,15 +108,17 @@ myApp.getTripDuration = function (startEpoch, endEpoch, current) {
 };
 
 myApp.getHistoricalData = function (numDays, current, dayIncrement) {
-
-   
+    const promiseArray = [];
     // for each day in the trip
     for (let j = 0; j < numDays; j++) {
         console.log(j);
 
         // retrieve temperature for the past five years
         for (let i = 0; i < 5; i++) {
-            myApp.getTemp(myApp.lat, myApp.lng, units, current);
+            //ajax call
+            // myApp.getTemp(myApp.lat, myApp.lng, units, current);
+            const promise = myApp.getTempPromise(myApp.lat, myApp.lng, units, current);
+            promiseArray.push(promise);
             // subract one Epoch year
             current = current - 31536000;
             console.log(current);
@@ -121,55 +126,62 @@ myApp.getHistoricalData = function (numDays, current, dayIncrement) {
         // add one Epoch day, add Epoch five years
         current = current + dayIncrement + (5 * 31536000);
     };
+    // myApp.outputHistoricalData();
+    console.log(promiseArray, "promiseArray");
 
-
-    myApp.outputHistoricalData();
+    //when all of the promises have been run go through the array of results to retrieve our data
+    $.when(...promiseArray).then((...res) => {
+        // console.log(res);    
+        res.forEach(function (weatherObject) {
+            // console.log(weatherObject[0].daily.data[0].temperatureMin, "WO");
+            myApp.historyTempMin.push(weatherObject[0].daily.data[0].temperatureMin);
+            myApp.historyTempMax.push(weatherObject[0].daily.data[0].temperatureMax);
+            myApp.historyTempAvg.push((weatherObject[0].daily.data[0].temperatureMax + weatherObject[0].daily.data[0].temperatureMin) / 2);
+        });
+        // once data is loaded into the arrays call the output... fn
+    }).then(myApp.outputHistoricalData);
 };
 
-myApp.outputHistoricalData = function() {
+myApp.outputHistoricalData = function () {
     console.log("TempMax", myApp.historyTempMax);
     console.log("TempMin", myApp.historyTempMin);
-    // console.log(myApp.historyTempMax[0]);
-    setTimeout(() => { console.log(myApp.historyTempMax[0]) }, 2000);
+    console.log("TempAvg", myApp.historyTempAvg);
+    console.log(myApp.historyTempMax[0]);
+    // setTimeout(() => { console.log(myApp.historyTempMax[0]) }, 2000);
 
-    myApp.getAverageTemp();
+    myApp.getAverageTemp(myApp.historyTempMax);
+    myApp.getAverageTemp(myApp.historyTempMin);
+    myApp.getAverageTemp(myApp.historyTempAvg);
 };
 
-myApp.getAverageTemp = function() {
-    // let summation = 0; 
-    // for (let k = 0; k < myApp.historyTempMax.length; k++) {
-    //     summation = myApp.historyTempMax[k] + summation;
-    //     console.log(summation);
-    // }
+myApp.getAverageTemp = function (calcArray) {
 
-    //console.log("tempMax", summation / myApp.historyTempMax.length);
+    const avgArray = calcArray.reduce((a, b) => a + b, 0) / calcArray.length;
+
+    $('.outputData').append(`<h3 class="tempMin">${avgArray}</h3>`);
 };
 
 
 // ----- Weather app API work begins here -----
 
-myApp.getTemp = function(lat, long, u, t){
-    $.ajax({
-        
+//we want this function to return a promise
+myApp.getTempPromise = function (lat, long, u, t) {
+    return $.ajax({
         url: `https://api.darksky.net/forecast/${myApp.weatherKey}/${lat},${long},${t}`,
         dataType: "jsonp",
         method: "GET",
-        data:{
-            format:"jsonp",
+        data: {
+            format: "jsonp",
             key: myApp.weatherKey,
             units: u
         }
-    }).then(res => {        
-        // push max and min temps for that day
-        myApp.historyTempMin.push(res.daily.data[0].temperatureMin);
-        myApp.historyTempMax.push(res.daily.data[0].temperatureMax);
-    });
-};
+    })
+}
 
-myApp.init = function(){
+myApp.init = function () {
     myApp.getInput();
 };
 
-$(function(){
+$(function () {
     myApp.init();
 });

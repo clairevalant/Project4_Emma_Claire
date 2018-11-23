@@ -12,29 +12,47 @@
 </head>
 
 <body>
-    <h1>Project 4</h1>
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut, voluptatum. Unde corporis nihil laboriosam magni
-        atque omnis maiores beatae odio, praesentium, architecto quae dolor. Autem quod ea doloribus saepe eveniet.</p>
-    <p>CLEMENTINE</p>
+    <h1>Suitcase Planner</h1>
+<!-- header starts here -->
+<header>
 
-    <form action="">
-        <fieldset>
-            <label for="ca">Celsius</label>
-            <input id="ca" value="ca" type="radio" name="tempUnits" checked="checked">
-            <label for="us">Farenheit</label>
-            <input id="us" value="us" type="radio" name="tempUnits">
-        </fieldset>
-        <label for="autoComplete">DESTINATION</label>
-        <input id="autoComplete" type="search" required>
+</header>
+<!-- header ends here -->
+<!-- main section start here -->
+<main>
+    <section class="inputData">
+        <form id="form" action="">
+            <fieldset>
+                <label for="ca">Celsius</label>
+                <input id="ca" value="ca" type="radio" name="tempUnits" checked="checked">
+                <label for="us">Farenheit</label>
+                <input id="us" value="us" type="radio" name="tempUnits">
+            </fieldset>
 
-        <label for="startDate">Start Date</label>
-        <input id="startDate" type="date" required>
+            <label for="autoComplete">DESTINATION</label>
+            <input id="autoComplete" type="search" required>
 
-        <label for="endDate">End Date</label>
-        <input id="endDate" type="date" required>
+            <label for="startDate">Start Date</label>
+            <input id="startDate" type="date" required>
 
-        <input id="submit" type="submit">
-    </form>
+            <label for="endDate">End Date</label>
+            <input id="endDate" type="date" required>
+
+            <input id="submit" type="submit">
+        </form>
+    </section>
+    <section class="outputData">
+
+    </section>
+</main> 
+<!-- main section ends here -->
+<!-- footer starts here -->
+<footer>
+
+
+</footer>
+<!-- footer ends here -->
+    
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?&v=3&key=AIzaSyAtUxpG10DW19jF5_OC6Q5rfT3PO5Nzmos&libraries=places"></script>

@@ -147,3 +147,6 @@ legend, button::-moz-focus-inner, input::-moz-focus-inner {
 
 body {
   background: lightblue; }
+
+.wrapper {
+  max-width: 90%; }
