@@ -207,6 +207,11 @@ myApp.weatherCalc = function () {
     } else if ((myApp.avgMinTemp > 10 && myApp.avgMinTemp < 15) && (myApp.avgMaxTemp >= 15 && myApp.avgMaxTemp < 30)) {
         //warm weather
         myApp.climate = "hotPlace";
+    } else if ((myApp.avgMinTemp >= -20 && myApp.avgMinTemp < 0) && (myApp.avgMaxTemp >= -10 && myApp.avgMaxTemp < 0)) {
+        myApp.climate = "extremelyColdPlace"
+    } else {
+        //set the climate to the catch-all climate "neutralPlace"
+        myApp.climate = "neutralPlace"
     }
     //pass the climate weather into the getClothing function
     myApp.getClothing(myApp.climate);
