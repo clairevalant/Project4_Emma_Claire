@@ -1,0 +1,5 @@
+// form styles
+
+form {
+    @include flexBox (column, space-around, center);
+}

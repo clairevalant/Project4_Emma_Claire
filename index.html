@@ -7,7 +7,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link href="https://fonts.googleapis.com/css?family=Comfortaa:700|Poppins|Roboto" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Comfortaa:700|Poppins:300" rel="stylesheet">
+
+<link href="https://fonts.googleapis.com/css?family=Comfortaa:700|Poppins:300|Rokkitt:700" rel="stylesheet">
+
     <script src="https://www.gstatic.com/firebasejs/5.5.9/firebase.js"></script>
     <link rel="stylesheet" href="styles/style.css">
     <title>Clementine</title>
@@ -29,23 +32,21 @@
     <section class="inputData">
         <div class="wrapper">
             <form id="form" action="">
-                <fieldset>
-                    <label for="ca">Celsius</label>
-                    <input id="ca" value="ca" type="radio" name="tempUnits" checked="checked">
-                    <label for="us">Farenheit</label>
-                    <input id="us" value="us" type="radio" name="tempUnits">
-                </fieldset>
+                <label for="ca">Celsius</label>
+                <input id="ca" value="ca" type="radio" name="tempUnits" checked="checked">
+                <label for="us">Farenheit</label>
+                <input id="us" value="us" type="radio" name="tempUnits">
             
-                <label for="autoComplete">Destination</label>
+                <label for="autoComplete" class="visuallyhidden">destination:</label>
                 <input id="autoComplete" type="search" required>
             
-                <label for="startDate">Start Date</label>
+                <label for="startDate">arriving:</label>
                 <input id="startDate" type="date" required>
             
-                <label for="endDate">End Date</label>
+                <label for="endDate">departing:</label>
                 <input id="endDate" type="date" required>
             
-                <input id="submit" type="submit">
+                <input id="submit" type="submit" value="go!">
             </form>
         </div>
     </section>
@@ -62,7 +63,10 @@
 <!-- main section ends here -->
 <!-- footer starts here -->
 <footer>
-    <p>Copyright &copy; Clementine Industries 2018</p>
+   <div class="wrapper">
+        <p>Copyright &copy; Clementine Industries 2018</p>
+        <p>Powered by <a href="https://darksky.net/dev">Dark Sky</a> and Google</p>
+   </div>
 </footer>
 <!-- footer ends here -->
     
