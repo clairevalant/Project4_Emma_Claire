@@ -303,9 +303,11 @@ input[type=submit] {
   width: 100%;
   padding: 10px 20px; }
 
+.datesWrapper {
+  width: 100%; }
+
 #autoComplete {
   width: 100%;
-  margin: 0;
   padding: 10px 0; }
 
 @media only screen and (min-width: 470px) {
@@ -323,3 +325,21 @@ input[type=submit] {
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center; } }
+
+@media only screen and (min-width: 500px) {
+  .datesWrapper {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center; }
+  label[for=endDate] {
+    margin-left: 10px; } }

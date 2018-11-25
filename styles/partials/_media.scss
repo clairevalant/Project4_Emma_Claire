@@ -5,3 +5,13 @@
         @include flexBox(row, space-between, center);
     }
 }
+
+@media only screen and (min-width: 500px) {
+    .datesWrapper {
+        @include flexBox(row, space-between, center);
+    }
+
+    label[for=endDate] {
+        margin-left: 10px;
+    }
+}
