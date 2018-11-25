@@ -16,7 +16,6 @@ firebase.initializeApp(config);
 
 // store our api keys for weather and google places
 myApp.weatherKey = "939526212d6d03b772f203915ea5ef22";
-
 myApp.googleKey = "AIzaSyAtUxpG10DW19jF5_OC6Q5rfT3PO5Nzmos";
 
 // tell our autoComplete input to actually Autocomplete in the specified input element "autoComplete"
@@ -33,7 +32,7 @@ google.maps.event.addListener(myApp.autoCompInput, "place_changed", function () 
 
 
 // prevent the default on form submit and get value of input
-myApp.getInput = function () {
+myApp.formSubmit = function () {
     $("form").on("submit", function (event) {
         event.preventDefault();
         myApp.collectFormData();
@@ -44,22 +43,19 @@ myApp.getInput = function () {
 myApp.collectFormData = function () {
     // toggle temperature units depending on user choice
     if ($("input[value=ca]:checked").val() === "ca") {
-        units = "ca";
+        myApp.units = "ca";
     } else {
-        units = "us";
+        myApp.units = "us";
     }
-    console.log(units);
 
     // get user date range / trip type (?) / unit toggle
     myApp.startDate = new Date($("#startDate").val());
     myApp.endDate = new Date($("#endDate").val());
-    console.log(myApp.startDate);
-    console.log(myApp.endDate);
 
-
+    // error handling if trip end date is sooner than start date
     if (myApp.startDate > myApp.endDate) {
-        alert("Please enter a valid end date.");
-        // RESET END DATE CALENDAR TO DEFAULT
+        alert("Please enter a valid end date after your start date.");
+        // RESET END DATE CALENDAR TO DEFAULT?
     }
 
     const sDate = myApp.startDate.getDate() + 1;
@@ -72,29 +68,25 @@ myApp.collectFormData = function () {
     let eYear = myApp.endDate.getFullYear();
 
 
-    // change user dates to Epoch time for past five years, send to DarkSky
+    // change user dates to Epoch time
     let startEpoch = new Date(`${sYear}, ${sMonth}, ${sDate}`).getTime() / 1000;
     let endEpoch = new Date(`${eYear}, ${eMonth}, ${eDate}`).getTime() / 1000;
 
-
-    // initialize loop date to previous year
-    let current = startEpoch;
-
     // call function to start retrieving historical data from Dark Sky API
-    myApp.getTripDuration(startEpoch, endEpoch, current);
+    myApp.getTripDuration(startEpoch, endEpoch);
 };
 
 
-
-myApp.getTripDuration = function (startEpoch, endEpoch, current) {
+// getting info to pass to API data algorithm
+myApp.getTripDuration = function (startEpoch, endEpoch) {
 
     // initialize arrays for max and min temps for past five years on specified date
     myApp.historyTempMin = [];
     myApp.historyTempMax = [];
-    // the historyTempAvg array adds the max and min temperature and divides by two.
+    // the historyTempAvg array adds the max and min temperature and divides by two
     myApp.historyTempAvg = [];
 
-    // how many days we increment by in algorithm (longer trips: every few days)
+    // how many days we increment by in algorithm (longer trips: every few days). one epoch day is 86400s
     let dayIncrement = 86400;
 
     // set how many days we take in the trip duration
@@ -109,42 +101,39 @@ myApp.getTripDuration = function (startEpoch, endEpoch, current) {
         dayIncrement = 86400 * 2;
         numDays = Math.floor((endEpoch - startEpoch) / dayIncrement);
     }
+    // ...or every three days for even higher trip length
     if (numDays > 15) {
         dayIncrement = 86400 * 3;
         numDays = Math.floor((endEpoch - startEpoch) / dayIncrement);
     }
 
-    myApp.getHistoricalData(numDays, current, dayIncrement);
+    myApp.getHistoricalData(numDays, startEpoch, dayIncrement);
 
 };
 
+// renamed the startEpoch argument current because we will be changing it in our loops
 myApp.getHistoricalData = function (numDays, current, dayIncrement) {
+
     const promiseArray = [];
     // for each day in the trip
     for (let j = 0; j < numDays; j++) {
-        console.log(j);
 
         // retrieve temperature for the past five years
         for (let i = 0; i < 5; i++) {
-            //ajax call
-            // myApp.getTemp(myApp.lat, myApp.lng, units, current);
-            const promise = myApp.getTempPromise(myApp.lat, myApp.lng, units, current);
+            // update our Promise array with info from 
+            const promise = myApp.getTempPromise(myApp.lat, myApp.lng, myApp.units, current);
             promiseArray.push(promise);
-            // subract one Epoch year
+            // go back one more Epoch year
             current = current - 31536000;
-            console.log(current);
         }
         // add one Epoch day, add Epoch five years
         current = current + dayIncrement + (5 * 31536000);
     };
-    // myApp.outputHistoricalData();
-    console.log(promiseArray, "promiseArray");
 
-    //when all of the promises have been run go through the array of results to retrieve our data
+    // when all of the promises have been run go through the array of results to retrieve our data
     $.when(...promiseArray).then((...res) => {
-        // console.log(res);    
+
         res.forEach(function (weatherObject) {
-            // console.log(weatherObject[0].daily.data[0].temperatureMin, "WO");
             myApp.historyTempMin.push(weatherObject[0].daily.data[0].temperatureMin);
             myApp.historyTempMax.push(weatherObject[0].daily.data[0].temperatureMax);
             myApp.historyTempAvg.push((weatherObject[0].daily.data[0].temperatureMax + weatherObject[0].daily.data[0].temperatureMin) / 2);
@@ -153,13 +142,27 @@ myApp.getHistoricalData = function (numDays, current, dayIncrement) {
     }).then(myApp.outputHistoricalData);
 };
 
+// we want this function to return a promise
+// the actual method which gets historical weather data from DarkSky 
+myApp.getTempPromise = function (lat, long, units, time) {
+    return $.ajax({
+        url: `https://api.darksky.net/forecast/${myApp.weatherKey}/${lat},${long},${time}`,
+        dataType: "jsonp",
+        method: "GET",
+        data: {
+            format: "jsonp",
+            key: myApp.weatherKey,
+            units: units,
+        }
+    })
+}
+
 myApp.outputHistoricalData = function () {
     console.log("TempMax", myApp.historyTempMax);
     console.log("TempMin", myApp.historyTempMin);
     console.log("TempAvg", myApp.historyTempAvg);
 
     myApp.getAverageTempMax(myApp.historyTempMax);
-
 
 };
 
@@ -185,7 +188,7 @@ myApp.getAverageTempMin = function (calcArray) {
     myApp.getAverageTemp(myApp.historyTempAvg);
 };
 
-//function for average temperature
+// function for average temperature
 myApp.getAverageTemp = function (calcArray) {
     //calculate the average temperature of the whole array rounded to two decimal points.
     myApp.avgArray = (calcArray.reduce((a, b) => a + b, 0) / calcArray.length).toFixed(2);
@@ -195,18 +198,22 @@ myApp.getAverageTemp = function (calcArray) {
     myApp.weatherCalc();
 };
 
+// assign a climate type to the destination
 myApp.weatherCalc = function () {
     myApp.climate = "";
-    //very cold weather
+    // very cold weather
     if ((myApp.avgMinTemp > 0 && myApp.avgMinTemp < 5) && (myApp.avgMaxTemp >= 5 && myApp.avgMaxTemp < 10)) {
         myApp.climate = "veryColdPlace";
-    }
-    //cold weather
-    else if ((myApp.avgMinTemp >= 5 && myApp.avgMinTemp < 10) && (myApp.avgMaxTemp >= 10 && myApp.avgMaxTemp < 20)) {
+    } else if ((myApp.avgMinTemp >= 5 && myApp.avgMinTemp < 10) && (myApp.avgMaxTemp >= 10 && myApp.avgMaxTemp < 20)) {
+        //cold weather
         myApp.climate = "coldPlace";
-    } else if ((myApp.avgMinTemp > 10 && myApp.avgMinTemp < 15) && (myApp.avgMaxTemp >= 15 && myApp.avgMaxTemp < 30)) {
+    } else if ((myApp.avgMinTemp > 10 && myApp.avgMinTemp < 15) && (myApp.avgMaxTemp >= 15 && myApp.avgMaxTemp < 25)) {
         //warm weather
+        myApp.climate = "warmPlace";
+    } else if ((myApp.avgMinTemp >= 15 && myApp.avgMinTemp < 25) && (myApp.avgMaxTemp >= 25 && myApp.avgMaxTemp < 35)){
         myApp.climate = "hotPlace";
+    } else if ((myApp.avgMinTemp >= 25) && (myApp.avgMaxTemp >= 35)){
+        myApp.climate = "extremelyHotPlace";
     } else if ((myApp.avgMinTemp >= -20 && myApp.avgMinTemp < 0) && (myApp.avgMaxTemp >= -10 && myApp.avgMaxTemp < 0)) {
         myApp.climate = "extremelyColdPlace"
     } else {
@@ -222,33 +229,16 @@ myApp.getClothing = function () {
     const dbRef = firebase.database().ref(`/${myApp.climate}/genderNeutral`);
     //what does 'value' mean?
     dbRef.on('value', (data) => {
-        console.log(data.val());
         myApp.wardrobe = data.val();
-        // list the wardrobe items from firebase for the specified climate.
+        // list the wardrobe items from firebase for the specified climate and display them for the user
         for (key in myApp.wardrobe) {
             $('.wardrobeList').append(`<li>${myApp.wardrobe[key]}</li>`);
         }
     });
 };
 
-// ----- Weather app API work begins here -----
-
-//we want this function to return a promise
-myApp.getTempPromise = function (lat, long, u, t) {
-    return $.ajax({
-        url: `https://api.darksky.net/forecast/${myApp.weatherKey}/${lat},${long},${t}`,
-        dataType: "jsonp",
-        method: "GET",
-        data: {
-            format: "jsonp",
-            key: myApp.weatherKey,
-            units: u
-        }
-    })
-}
-
 myApp.init = function () {
-    myApp.getInput();
+    myApp.formSubmit();
 };
 
 $(function () {
