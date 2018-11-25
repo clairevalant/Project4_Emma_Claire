@@ -7,17 +7,25 @@ form {
 
 .inputWrapper {
     width: 100%;
-    @include flexBox (row, space-evenly, center)
+    @include flexBox (row, space-between, center)
 }
 
 .radio {
-    align-items: center;
+    justify-content: flex-end;
 }
 
 input {
     padding: 10px;
     margin: 5px 0;
     border: 1px solid $accentColour;
+}
+
+input[type=radio] {
+    margin: 10px;
+}
+
+input[type=date] {
+    width: 75%;
 }
 
 input[type=submit] {
