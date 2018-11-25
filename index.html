@@ -7,57 +7,62 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="styles/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Comfortaa:700|Poppins|Roboto" rel="stylesheet">
     <script src="https://www.gstatic.com/firebasejs/5.5.9/firebase.js"></script>
+    <link rel="stylesheet" href="styles/style.css">
     <title>Clementine</title>
 </head>
 
 <body>
-    <h1>Suitcase Planner</h1>
 <!-- header starts here -->
 <header>
-
+    <div class="wrapper">
+        <h1>Suitcase Scout</h1>
+        <p>Plan when to go where and what to wear for your long or distant trips. Enter your desired location and trip duration, then find the right clothes for your vacation!</p>
+    </div>
 </header>
 <!-- header ends here -->
 
 <!-- main section start here -->
 <main>
+
     <section class="inputData">
-        <form id="form" action="">
-            <fieldset>
-                <label for="ca">Celsius</label>
-                <input id="ca" value="ca" type="radio" name="tempUnits" checked="checked">
-                <label for="us">Farenheit</label>
-                <input id="us" value="us" type="radio" name="tempUnits">
-            </fieldset>
-
-            <label for="autoComplete">Destination</label>
-            <input id="autoComplete" type="search" required>
-
-            <label for="startDate">Start Date</label>
-            <input id="startDate" type="date" required>
-
-            <label for="endDate">End Date</label>
-            <input id="endDate" type="date" required>
-
-            <input id="submit" type="submit">
-        </form>
-    </section>
-    <section class="outputData">
-        <div class="results">
-
+        <div class="wrapper">
+            <form id="form" action="">
+                <fieldset>
+                    <label for="ca">Celsius</label>
+                    <input id="ca" value="ca" type="radio" name="tempUnits" checked="checked">
+                    <label for="us">Farenheit</label>
+                    <input id="us" value="us" type="radio" name="tempUnits">
+                </fieldset>
             
+                <label for="autoComplete">Destination</label>
+                <input id="autoComplete" type="search" required>
+            
+                <label for="startDate">Start Date</label>
+                <input id="startDate" type="date" required>
+            
+                <label for="endDate">End Date</label>
+                <input id="endDate" type="date" required>
+            
+                <input id="submit" type="submit">
+            </form>
         </div>
-        <ul class="wardrobeList">
+    </section>
 
-        </ul>
+    <section class="outputData">
+        <div class="wrapper">
+            <div class="results"></div>
+
+            <!-- list to display packing list -->
+            <ul class="wardrobeList"></ul>
+        </div>
     </section>
 </main> 
 <!-- main section ends here -->
 <!-- footer starts here -->
 <footer>
-
-
+    <p>Copyright &copy; Clementine Industries 2018</p>
 </footer>
 <!-- footer ends here -->
     

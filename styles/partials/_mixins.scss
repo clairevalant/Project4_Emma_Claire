@@ -1,0 +1,19 @@
+@mixin position($position-type: relative, $top: auto, $right: auto, $bottom: auto, $left: auto) {
+	position: $position-type;
+	top: $top;
+	right: $right;
+	bottom: $bottom;
+	left: $left;
+}
+
+@mixin flexBox($direction: row, $justify: center, $align: center) {
+	display: flex;
+	flex-direction: $direction;
+	justify-content: $justify;
+	align-items: $align;
+}
+
+@mixin bgCenter() {
+	background-position: center;
+	background-size: cover;
+}
