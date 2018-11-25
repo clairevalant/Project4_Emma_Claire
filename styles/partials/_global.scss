@@ -22,6 +22,7 @@ footer {
 
 .wrapper {
     width: 90%;
+    margin: 10px auto;
     @include flexBox(column, space-between, center);
 }
 
@@ -38,15 +39,6 @@ input {
     border-radius: 10px;
 }
 
-input {
-    border: 1px solid $accentColour;
-}
-
-input[type=submit] {
-    border: none;
-    padding: 10px 20px;
-}
-
 footer,
 input[type=submit] {
     background: $accentColour;
@@ -55,6 +47,11 @@ input[type=submit] {
 
 footer {
     width: 100%;
+}
+
+footer .wrapper {
+    // text-align: center;
+    @include flexBox(column, space-between, center);
 }
 
 footer p {

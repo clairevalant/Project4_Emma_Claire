@@ -7,10 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link href="https://fonts.googleapis.com/css?family=Comfortaa:700|Poppins:300" rel="stylesheet">
-
-<link href="https://fonts.googleapis.com/css?family=Comfortaa:700|Poppins:300|Rokkitt:700" rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css?family=Comfortaa:700|Lato" rel="stylesheet">
     <script src="https://www.gstatic.com/firebasejs/5.5.9/firebase.js"></script>
     <link rel="stylesheet" href="styles/style.css">
     <title>Clementine</title>
@@ -28,23 +25,32 @@
 
 <!-- main section start here -->
 <main>
+    
 
     <section class="inputData">
         <div class="wrapper">
             <form id="form" action="">
-                <label for="ca">Celsius</label>
-                <input id="ca" value="ca" type="radio" name="tempUnits" checked="checked">
-                <label for="us">Farenheit</label>
-                <input id="us" value="us" type="radio" name="tempUnits">
+                <div class="inputWrapper radio">
+                    <label for="ca">Celsius</label>
+                    <input id="ca" value="ca" type="radio" name="tempUnits" checked="checked">
+                    <label for="us">Farenheit</label>
+                    <input id="us" value="us" type="radio" name="tempUnits">
+                </div>
             
                 <label for="autoComplete" class="visuallyhidden">destination:</label>
                 <input id="autoComplete" type="search" required>
             
-                <label for="startDate">arriving:</label>
-                <input id="startDate" type="date" required>
-            
-                <label for="endDate">departing:</label>
-                <input id="endDate" type="date" required>
+                <div class="datesWrapper">
+                    <div class="inputWrapper">
+                        <label for="startDate">arrive:</label>
+                        <input id="startDate" type="date" required>
+                    </div>
+                    
+                    <div class="inputWrapper">
+                        <label for="endDate">depart:</label>
+                        <input id="endDate" type="date" required>
+                    </div>
+                </div>
             
                 <input id="submit" type="submit" value="go!">
             </form>
@@ -65,7 +71,7 @@
 <footer>
    <div class="wrapper">
         <p>Copyright &copy; Clementine Industries 2018</p>
-        <p>Powered by <a href="https://darksky.net/dev">Dark Sky</a> and Google</p>
+        <p>Powered by <a href="https://darksky.net/dev">Dark Sky</a> & Google</p>
    </div>
 </footer>
 <!-- footer ends here -->
