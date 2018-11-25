@@ -49,6 +49,11 @@ footer {
     width: 100%;
 }
 
+footer .wrapper {
+    // text-align: center;
+    @include flexBox(column, space-between, center);
+}
+
 footer p {
     font-size: 1.3rem;
     margin: 0;
