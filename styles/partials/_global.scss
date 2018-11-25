@@ -13,6 +13,19 @@ body {
     @include flexBox(column, center, center);
 }
 
+ul {
+    padding: 0;
+}
+
+//The a tag that refreshes the page
+#reset {
+    text-decoration: none;
+    padding: 10px 20px;
+    margin-bottom: 10px;
+    width: 100%;
+    text-align: center;
+}
+
 header,
 section,
 footer {
@@ -35,12 +48,12 @@ header {
 
 section,
 header,
-input {
+input, a {
     border-radius: 10px;
 }
 
 footer,
-input[type=submit] {
+input[type=submit], #reset {
     background: $accentColour;
     color: $secondaryColour;
 }

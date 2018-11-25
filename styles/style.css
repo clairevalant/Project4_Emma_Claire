@@ -167,6 +167,16 @@ body {
   -ms-flex-align: center;
   align-items: center; }
 
+ul {
+  padding: 0; }
+
+#reset {
+  text-decoration: none;
+  padding: 10px 20px;
+  margin-bottom: 10px;
+  width: 100%;
+  text-align: center; }
+
 header,
 section,
 footer {
@@ -210,11 +220,11 @@ header {
 
 section,
 header,
-input {
+input, a {
   border-radius: 10px; }
 
 footer,
-input[type=submit] {
+input[type=submit], #reset {
   background: #308469;
   color: white; }
 
@@ -249,6 +259,7 @@ a {
 
 h1 {
   font-family: "Comfortaa", cursive;
+  color: #308469;
   margin: 10px auto; }
 
 form {
@@ -296,7 +307,8 @@ input[type=radio] {
   margin: 10px; }
 
 input[type=date] {
-  width: 75%; }
+  width: 75%;
+  color: #777777; }
 
 input[type=submit] {
   border: none;

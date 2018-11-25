@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css?family=Comfortaa:700|Lato" rel="stylesheet">
     <script src="https://www.gstatic.com/firebasejs/5.5.9/firebase.js"></script>
     <link rel="stylesheet" href="styles/style.css">
-    <title>Clementine</title>
+    <title>Suitcase Scout</title>
 </head>
 
 <body>
@@ -18,15 +18,13 @@
 <header>
     <div class="wrapper">
         <h1>Suitcase Scout</h1>
-        <p>Plan when to go where and what to wear for your long or distant trips. Enter your desired location and trip duration, then find the right clothes for your vacation!</p>
+        <p>Plan when to go and what to pack for your next adventure. Enter your destination and trip duration, and find the right clothes for your vacation!</p>
     </div>
 </header>
 <!-- header ends here -->
 
 <!-- main section start here -->
 <main>
-    
-
     <section class="inputData">
         <div class="wrapper">
             <form id="form" action="">
@@ -42,17 +40,17 @@
             
                 <div class="datesWrapper">
                     <div class="inputWrapper">
-                        <label for="startDate">arrive:</label>
+                        <label for="startDate">Arrive:</label>
                         <input id="startDate" type="date" required>
                     </div>
                     
                     <div class="inputWrapper">
-                        <label for="endDate">depart:</label>
+                        <label for="endDate">Depart:</label>
                         <input id="endDate" type="date" required>
                     </div>
                 </div>
             
-                <input id="submit" type="submit" value="go!">
+                <input id="submit" type="submit" value="Let's go!">
             </form>
         </div>
     </section>
@@ -63,6 +61,7 @@
 
             <!-- list to display packing list -->
             <ul class="wardrobeList"></ul>
+            <a id="reset" href="#">Explore new place</a>
         </div>
     </section>
 </main> 
