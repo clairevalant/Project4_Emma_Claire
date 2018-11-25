@@ -1,5 +1,34 @@
 // form styles
 
 form {
-    @include flexBox (column, space-around, center);
+    width:100%;
+    @include flexBox (column, space-around, flex-start);
+}
+
+.inputWrapper {
+    width: 100%;
+    @include flexBox (row, space-evenly, center)
+}
+
+.radio {
+    align-items: center;
+}
+
+input {
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid $accentColour;
+}
+
+input[type=submit] {
+    border: none;
+    width: 100%;
+    padding: 10px 20px;
+}
+
+#autoComplete {
+    width: 100%;
+    margin: 0;
+    padding: 10px 0;
+
 }

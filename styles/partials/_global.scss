@@ -22,6 +22,7 @@ footer {
 
 .wrapper {
     width: 90%;
+    margin: 10px auto;
     @include flexBox(column, space-between, center);
 }
 
@@ -36,15 +37,6 @@ section,
 header,
 input {
     border-radius: 10px;
-}
-
-input {
-    border: 1px solid $accentColour;
-}
-
-input[type=submit] {
-    border: none;
-    padding: 10px 20px;
 }
 
 footer,
