@@ -260,7 +260,7 @@ a {
 h1 {
   font-family: "Comfortaa", cursive;
   color: #308469;
-  margin: 10px auto; }
+  // margin: 10px auto; }
 
 form {
   width: 100%;
