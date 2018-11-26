@@ -14,23 +14,6 @@ var config = {
 };
 firebase.initializeApp(config);
 
-// add smoothScroll
-tattApp.smoothScroll = function () {
-    $("header a").smoothScroll({
-        offset: -40,
-    });
-
-    $(".playAgain").smoothScroll({
-        offset: -40,
-    });
-}
-
-// myApp.smoothScroll = function(){
-//     $("input[type=submit]").on("click", function(){
-//         $(".results").scrollIntoView();
-//     })
-// }
-
 // store our api keys for weather and google places
 myApp.weatherKey = "939526212d6d03b772f203915ea5ef22";
 myApp.googleKey = "AIzaSyAtUxpG10DW19jF5_OC6Q5rfT3PO5Nzmos";
@@ -53,10 +36,16 @@ myApp.formSubmit = function () {
     $("form").on("submit", function (event) {
         event.preventDefault();
         myApp.collectFormData();
-        $(".results").scrollIntoView();
+        myApp.scrollResults();
     }
     )
 };
+
+myApp.scrollResults = function(){
+        $("footer").smoothScroll({
+            offset: 0,
+        });
+}
 
 myApp.collectFormData = function () {
     // toggle temperature units depending on user choice
