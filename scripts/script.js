@@ -207,24 +207,50 @@ myApp.getAverageTemp = function (calcArray) {
 // assign a climate type to the destination
 myApp.weatherCalc = function () {
     myApp.climate = "";
-    // very cold weather
-    if ((myApp.avgMinTemp > 0 && myApp.avgMinTemp < 5) && (myApp.avgMaxTemp >= 5 && myApp.avgMaxTemp < 10)) {
-        myApp.climate = "veryColdPlace";
-    } else if ((myApp.avgMinTemp >= 5 && myApp.avgMinTemp < 10) && (myApp.avgMaxTemp >= 10 && myApp.avgMaxTemp < 20)) {
-        //cold weather
-        myApp.climate = "coldPlace";
-    } else if ((myApp.avgMinTemp > 10 && myApp.avgMinTemp < 15) && (myApp.avgMaxTemp >= 15 && myApp.avgMaxTemp < 25)) {
-        //warm weather
-        myApp.climate = "warmPlace";
-    } else if ((myApp.avgMinTemp >= 15 && myApp.avgMinTemp < 25) && (myApp.avgMaxTemp >= 25 && myApp.avgMaxTemp < 35)){
-        myApp.climate = "hotPlace";
-    } else if ((myApp.avgMinTemp >= 25) && (myApp.avgMaxTemp >= 35)){
-        myApp.climate = "extremelyHotPlace";
-    } else if ((myApp.avgMinTemp >= -20 && myApp.avgMinTemp < 0) && (myApp.avgMaxTemp >= -10 && myApp.avgMaxTemp < 0)) {
-        myApp.climate = "extremelyColdPlace"
+
+    if (myApp.units === "ca"){
+        
+        // very cold weather
+        if ((myApp.avgMinTemp > 0 && myApp.avgMinTemp < 5) && (myApp.avgMaxTemp >= 5 && myApp.avgMaxTemp < 10)) {
+            myApp.climate = "veryColdPlace";
+        } else if ((myApp.avgMinTemp >= 5 && myApp.avgMinTemp < 10) && (myApp.avgMaxTemp >= 10 && myApp.avgMaxTemp < 20)) {
+            //cold weather
+            myApp.climate = "coldPlace";
+        } else if ((myApp.avgMinTemp > 10 && myApp.avgMinTemp < 15) && (myApp.avgMaxTemp >= 15 && myApp.avgMaxTemp < 25)) {
+            //warm weather
+            myApp.climate = "warmPlace";
+        } else if ((myApp.avgMinTemp >= 15 && myApp.avgMinTemp < 25) && (myApp.avgMaxTemp >= 25 && myApp.avgMaxTemp < 35)){
+            myApp.climate = "hotPlace";
+        } else if ((myApp.avgMinTemp >= 25) && (myApp.avgMaxTemp >= 35)){
+            myApp.climate = "extremelyHotPlace";
+        } else if ((myApp.avgMinTemp >= -20 && myApp.avgMinTemp < 0) && (myApp.avgMaxTemp >= -10 && myApp.avgMaxTemp < 0)) {
+            myApp.climate = "extremelyColdPlace"
+        } else {
+            //set the climate to the catch-all climate "neutralPlace"
+            myApp.climate = "neutralPlace"
+        }
     } else {
-        //set the climate to the catch-all climate "neutralPlace"
-        myApp.climate = "neutralPlace"
+        // account for fahrenheit
+
+        // very cold weather
+        if ((myApp.avgMinTemp > 32 && myApp.avgMinTemp < 41) && (myApp.avgMaxTemp >= 41 && myApp.avgMaxTemp < 50)) {
+            myApp.climate = "veryColdPlace";
+        } else if ((myApp.avgMinTemp >= 41 && myApp.avgMinTemp < 50) && (myApp.avgMaxTemp >= 50 && myApp.avgMaxTemp < 68)) {
+            //cold weather
+            myApp.climate = "coldPlace";
+        } else if ((myApp.avgMinTemp > 50 && myApp.avgMinTemp < 59) && (myApp.avgMaxTemp >= 59 && myApp.avgMaxTemp < 77)) {
+            //warm weather
+            myApp.climate = "warmPlace";
+        } else if ((myApp.avgMinTemp >= 59 && myApp.avgMinTemp < 77) && (myApp.avgMaxTemp >= 59 && myApp.avgMaxTemp < 95)) {
+            myApp.climate = "hotPlace";
+        } else if ((myApp.avgMinTemp >= 77) && (myApp.avgMaxTemp >= 95)) {
+            myApp.climate = "extremelyHotPlace";
+        } else if ((myApp.avgMinTemp >= 24.8 && myApp.avgMinTemp < 32) && (myApp.avgMaxTemp >= 6.8 && myApp.avgMaxTemp < 32)) {
+            myApp.climate = "extremelyColdPlace"
+        } else {
+            //set the climate to the catch-all climate "neutralPlace"
+            myApp.climate = "neutralPlace"
+        }
     }
     //pass the climate weather into the getClothing function
     myApp.getClothing(myApp.climate);
