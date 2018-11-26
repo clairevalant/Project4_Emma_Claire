@@ -61,7 +61,7 @@ myApp.collectFormData = function () {
     // error handling if trip end date is sooner than start date
     if (myApp.startDate > myApp.endDate) {
         alert("Please enter a valid end date after your start date.");
-        // RESET END DATE CALENDAR TO DEFAULT?
+        location.reload();
     }
 
     const sDate = myApp.startDate.getDate() + 1;
