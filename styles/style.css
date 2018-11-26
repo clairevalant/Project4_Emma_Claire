@@ -223,13 +223,21 @@ header {
 
 section,
 header,
-input, a {
+input,
+a {
   border-radius: 10px; }
 
 footer,
 input[type=submit], #reset {
   background: #016a77;
-  color: white; }
+  color: white;
+  -webkit-transition: background 0.3s;
+  -o-transition: background 0.3s;
+  transition: background 0.3s; }
+
+input[type=submit]:hover,
+#reset:hover {
+  background: #34a3a7; }
 
 footer {
   width: 100%; }
@@ -417,7 +425,7 @@ input[type=submit],
     background-position: center;
     background-size: cover;
     color: white;
-    height: 100vh; }
+    height: 95vh; }
   header img {
     display: none; }
   h1 {

@@ -34,18 +34,15 @@ google.maps.event.addListener(myApp.autoCompInput, "place_changed", function () 
 // prevent the default on form submit and get value of input
 myApp.formSubmit = function () {
     $("form").on("submit", function (event) {
+        // scroll to results section
+        $('html, body').animate({
+            scrollTop: $(".results").offset().top
+        },1000);
         event.preventDefault();
         myApp.collectFormData();
-        myApp.scrollResults();
     }
     )
 };
-
-myApp.scrollResults = function(){
-        $("footer").smoothScroll({
-            offset: 0,
-        });
-}
 
 myApp.collectFormData = function () {
     // toggle temperature units depending on user choice

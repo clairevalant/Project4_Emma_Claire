@@ -52,7 +52,8 @@ header {
 
 section,
 header,
-input, a {
+input,
+a {
     border-radius: 10px;
 }
 
@@ -60,6 +61,12 @@ footer,
 input[type=submit], #reset {
     background: $accentColour;
     color: $secondaryColour;
+    transition: background 0.3s;
+}
+
+input[type=submit]:hover,
+#reset:hover{
+    background: #34a3a7;
 }
 
 footer {
