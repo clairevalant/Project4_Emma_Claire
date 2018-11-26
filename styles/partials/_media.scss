@@ -8,15 +8,21 @@
 
 @media only screen and (min-width: 500px) {
     .datesWrapper {
-        @include flexBox(row, space-between, center);
+        @include flexBox(row, space-evenly, center);
     }
 
-    label[for=endDate] {
+    .inputWrapper:last-of-type {
         margin-left: 10px;
     }
 
     form {
         min-height: 300px;
+    }
+}
+
+@media only screen and (min-width: 625px) {
+    .gallery img:nth-child(2) {
+        display: inline-block;
     }
 }
 
@@ -43,5 +49,15 @@
         margin: 0 0 0 5vw;
         @include flexBox(column, flex-start, flex-start);
         width: 30%;
+    }
+}
+
+@media only screen and (min-width: 900px) {
+    form {
+        width: 60%;
+    }
+
+    .gallery img:nth-child(3) {
+        display: inline-block;
     }
 }

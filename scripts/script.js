@@ -14,6 +14,23 @@ var config = {
 };
 firebase.initializeApp(config);
 
+// add smoothScroll
+tattApp.smoothScroll = function () {
+    $("header a").smoothScroll({
+        offset: -40,
+    });
+
+    $(".playAgain").smoothScroll({
+        offset: -40,
+    });
+}
+
+// myApp.smoothScroll = function(){
+//     $("input[type=submit]").on("click", function(){
+//         $(".results").scrollIntoView();
+//     })
+// }
+
 // store our api keys for weather and google places
 myApp.weatherKey = "939526212d6d03b772f203915ea5ef22";
 myApp.googleKey = "AIzaSyAtUxpG10DW19jF5_OC6Q5rfT3PO5Nzmos";
@@ -36,6 +53,7 @@ myApp.formSubmit = function () {
     $("form").on("submit", function (event) {
         event.preventDefault();
         myApp.collectFormData();
+        $(".results").scrollIntoView();
     }
     )
 };
@@ -173,7 +191,7 @@ myApp.getAverageTempMax = function (calcArray) {
     //calculate the average temperature of the whole array rounded to two decimal points.
     myApp.avgMaxTemp = (calcArray.reduce((a, b) => a + b, 0) / calcArray.length).toFixed(2);
     $('.outputData').css('display', 'block');
-    $('.results').append(`<h3 class="tempMax">Maximum temperature per day: ${myApp.avgMaxTemp} ${myApp.unitsPrinted}</h3>`);
+    $('.results').append(`<p class="tempMax">Maximum temperature per day: </p>`, `<p class="temp">${myApp.avgMaxTemp} ${myApp.unitsPrinted}</p>`);
     //call the firebase api to figure out what to add to the packing list
     // myApp.getClothing();
     myApp.getAverageTempMin(myApp.historyTempMin);
@@ -184,7 +202,7 @@ myApp.getAverageTempMin = function (calcArray) {
     //calculate the average temperature of the whole array rounded to two decimal points.
     myApp.avgMinTemp = (calcArray.reduce((a, b) => a + b, 0) / calcArray.length).toFixed(2);
 
-    $('.results').append(`<h3 class="tempMin">Minimum temperature per day: ${myApp.avgMinTemp} ${myApp.unitsPrinted}</h3>`);
+    $('.results').append(`<p class="tempMin">Minimum temperature per day:</p>`, `<p class="temp">${myApp.avgMinTemp}${myApp.unitsPrinted}</p>`);
     //call the firebase api to figure out what to add to the packing list
 
     myApp.getAverageTemp(myApp.historyTempAvg);
@@ -195,7 +213,7 @@ myApp.getAverageTemp = function (calcArray) {
     //calculate the average temperature of the whole array rounded to two decimal points.
     myApp.avgArray = (calcArray.reduce((a, b) => a + b, 0) / calcArray.length).toFixed(2);
 
-    $('.results').append(`<h3 class="avgTemp">Average temperature per day: ${myApp.avgArray} ${myApp.unitsPrinted}</h3>`);
+    $('.results').append(`<p class="avgTemp">Average temperature per day:</p>`, `<p class="temp">${myApp.avgArray} ${myApp.unitsPrinted}</p>`);
     //call the firebase api to figure out what to add to the packing list
     myApp.weatherCalc();
 };

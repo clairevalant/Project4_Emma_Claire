@@ -5,7 +5,7 @@ form {
     @include flexBox (column, space-around, flex-start);
 }
 
-form p {
+.explanation {
     align-self: flex-start;
 }
 

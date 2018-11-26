@@ -1,24 +1,10 @@
 // gallery styles
 
 .gallery {
-    height: 40vh;
     @include flexBox();
 }
 
-.img1 {
-    width: 33.3vw;
-    background: url("../assets/egypt.jpg");
-    @include bgCenter();
-}
-
-.img2 {
-    width: 33.3vw;
-    background: url("../assets/skating.jpg");
-    @include bgCenter();
-}
-
-.img3 {
-    width: 33.3vw;
-    background: url("../assets/riceField.jpg");
-    @include bgCenter();
+.gallery img:nth-child(3),
+.gallery img:nth-child(2) {
+    display: none;
 }
