@@ -14,4 +14,34 @@
     label[for=endDate] {
         margin-left: 10px;
     }
+
+    form {
+        min-height: 300px;
+    }
+}
+
+@media only screen and (min-width: 770px) {
+    header{
+        background: linear-gradient(to bottom, #0169770c, #0169778a), url("../assets/beach.jpg");
+        @include flexBox(row, flex-start, center);
+        @include bgCenter();
+        color: white;
+        height: 100vh;
+    }
+
+    header img {
+        display: none;
+    }
+
+    h1 {
+        color:white;
+        font-size: 4rem;
+        margin: 0;
+    }
+
+    header .wrapper {
+        margin: 0 0 0 5vw;
+        @include flexBox(column, flex-start, flex-start);
+        width: 30%;
+    }
 }

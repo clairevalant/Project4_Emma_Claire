@@ -170,6 +170,9 @@ body {
 ul {
   padding: 0; }
 
+img {
+  width: 100%; }
+
 #reset {
   text-decoration: none;
   padding: 10px 20px;
@@ -225,7 +228,7 @@ input, a {
 
 footer,
 input[type=submit], #reset {
-  background: #11503c;
+  background: #016a77;
   color: white; }
 
 footer {
@@ -259,7 +262,7 @@ a {
 
 h1 {
   font-family: "Comfortaa", cursive;
-  color: #11503c;
+  color: #016a77;
   margin: 10px auto; }
 
 form {
@@ -276,6 +279,10 @@ form {
   -webkit-box-align: start;
   -ms-flex-align: start;
   align-items: flex-start; }
+
+form p {
+  -ms-flex-item-align: start;
+  align-self: flex-start; }
 
 .inputWrapper {
   width: 100%;
@@ -294,14 +301,14 @@ form {
   align-items: center; }
 
 .radio {
-  -webkit-box-pack: end;
-  -ms-flex-pack: end;
-  justify-content: flex-end; }
+  -webkit-box-pack: start;
+  -ms-flex-pack: start;
+  justify-content: flex-start; }
 
 input {
   padding: 10px;
   margin: 5px 0;
-  border: 1px solid #11503c; }
+  border: 1px solid #016a77; }
 
 input[type=radio] {
   margin: 10px; }
@@ -353,4 +360,52 @@ input[type=submit],
     -ms-flex-align: center;
     align-items: center; }
   label[for=endDate] {
-    margin-left: 10px; } }
+    margin-left: 10px; }
+  form {
+    min-height: 300px; } }
+
+@media only screen and (min-width: 770px) {
+  header {
+    background: -webkit-gradient(linear, left top, left bottom, from(#0169770c), to(#0169778a)), url("../assets/beach.jpg");
+    background: -webkit-linear-gradient(top, #0169770c, #0169778a), url("../assets/beach.jpg");
+    background: -o-linear-gradient(top, #0169770c, #0169778a), url("../assets/beach.jpg");
+    background: linear-gradient(to bottom, #0169770c, #0169778a), url("../assets/beach.jpg");
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -webkit-box-pack: start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    background-position: center;
+    background-size: cover;
+    color: white;
+    height: 100vh; }
+  header img {
+    display: none; }
+  h1 {
+    color: white;
+    font-size: 4rem;
+    margin: 0; }
+  header .wrapper {
+    margin: 0 0 0 5vw;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-pack: start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    -webkit-box-align: start;
+    -ms-flex-align: start;
+    align-items: flex-start;
+    width: 30%; } }

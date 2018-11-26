@@ -19,7 +19,8 @@
     <div class="wrapper">
         <h1>Suitcase Scout</h1>
         <p>Plan when to go and what to pack for your next adventure. Enter your destination and trip duration, and find the right clothes for your vacation!</p>
-        <img src="assets/" alt="">
+        <img src="assets/beach.jpg" alt="Aerial shot of two people walking on a tiny Caribbean island surrounded by teal water">
+        <!-- <img src="assets/egypt.jpg" alt="People walking under massive pillars with heiroglyphs in Egypt"> -->
     </div>
 </header>
 <!-- header ends here -->
@@ -28,14 +29,8 @@
 <main>
     <section class="inputData">
         <div class="wrapper">
+            <p>Tell us where and when you will need clothes:</p>
             <form id="form" action="">
-                <div class="inputWrapper radio">
-                    <label for="ca">Celsius</label>
-                    <input id="ca" value="ca" type="radio" name="tempUnits" checked="checked">
-                    <label for="us">Farenheit</label>
-                    <input id="us" value="us" type="radio" name="tempUnits">
-                </div>
-            
                 <div class="inputWrapper">
                     <label class="visuallyhidden" for="autoComplete">Destination:</label>
                     <input id="autoComplete" type="search" required>
@@ -51,6 +46,13 @@
                         <label for="endDate">Depart:</label>
                         <input id="endDate" type="date" required>
                     </div>
+                </div>
+
+                <div class="inputWrapper radio">
+                    <label for="ca">Celsius</label>
+                    <input id="ca" value="ca" type="radio" name="tempUnits" checked="checked">
+                    <label for="us">Farenheit</label>
+                    <input id="us" value="us" type="radio" name="tempUnits">
                 </div>
             
                 <input id="submit" type="submit" value="Let's go!">

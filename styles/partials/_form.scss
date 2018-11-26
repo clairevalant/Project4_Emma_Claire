@@ -5,13 +5,17 @@ form {
     @include flexBox (column, space-around, flex-start);
 }
 
+form p {
+    align-self: flex-start;
+}
+
 .inputWrapper {
     width: 100%;
     @include flexBox (row, space-between, center)
 }
 
 .radio {
-    justify-content: flex-end;
+    justify-content: flex-start;
 }
 
 input {
