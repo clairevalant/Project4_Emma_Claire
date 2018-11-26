@@ -32,7 +32,7 @@
         @include flexBox(row, flex-start, center);
         @include bgCenter();
         color: white;
-        height: 95vh;
+        height: calc(100vh - 40px);
     }
 
     header img {

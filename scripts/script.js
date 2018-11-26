@@ -36,8 +36,8 @@ myApp.formSubmit = function () {
     $("form").on("submit", function (event) {
         // scroll to results section
         $('html, body').animate({
-            scrollTop: $(".results").offset().top
-        },1000);
+            scrollTop: $("footer").offset().top
+        }, 2000);
         event.preventDefault();
         myApp.collectFormData();
     }
@@ -176,7 +176,7 @@ myApp.outputHistoricalData = function () {
 myApp.getAverageTempMax = function (calcArray) {
     //calculate the average temperature of the whole array rounded to two decimal points.
     myApp.avgMaxTemp = (calcArray.reduce((a, b) => a + b, 0) / calcArray.length).toFixed(2);
-    $('.outputData').css('display', 'block');
+    $('.outputData').css('display', 'block').slideDown("slow");
     $('.results').append(`<p class="tempMax">Maximum temperature per day: </p>`, `<p class="temp">${myApp.avgMaxTemp} ${myApp.unitsPrinted}</p>`);
     //call the firebase api to figure out what to add to the packing list
     // myApp.getClothing();

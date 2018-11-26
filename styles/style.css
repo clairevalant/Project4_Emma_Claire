@@ -425,7 +425,7 @@ input[type=submit],
     background-position: center;
     background-size: cover;
     color: white;
-    height: 95vh; }
+    height: calc(100vh - 40px); }
   header img {
     display: none; }
   h1 {
