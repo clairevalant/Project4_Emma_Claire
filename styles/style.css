@@ -225,7 +225,7 @@ input, a {
 
 footer,
 input[type=submit], #reset {
-  background: #308469;
+  background: #11503c;
   color: white; }
 
 footer {
@@ -259,8 +259,8 @@ a {
 
 h1 {
   font-family: "Comfortaa", cursive;
-  color: #308469;
-  // margin: 10px auto; }
+  color: #11503c;
+  margin: 10px auto; }
 
 form {
   width: 100%;
@@ -301,7 +301,7 @@ form {
 input {
   padding: 10px;
   margin: 5px 0;
-  border: 1px solid #308469; }
+  border: 1px solid #11503c; }
 
 input[type=radio] {
   margin: 10px; }
@@ -312,15 +312,14 @@ input[type=date] {
 
 input[type=submit] {
   border: none;
-  width: 100%;
   padding: 10px 20px; }
 
+input[type=submit],
 .datesWrapper {
   width: 100%; }
 
 #autoComplete {
-  width: 100%;
-  padding: 10px 0; }
+  width: 100vw; }
 
 @media only screen and (min-width: 470px) {
   footer .wrapper {

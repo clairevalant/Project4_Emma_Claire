@@ -19,6 +19,7 @@
     <div class="wrapper">
         <h1>Suitcase Scout</h1>
         <p>Plan when to go and what to pack for your next adventure. Enter your destination and trip duration, and find the right clothes for your vacation!</p>
+        <img src="assets/" alt="">
     </div>
 </header>
 <!-- header ends here -->
@@ -35,8 +36,10 @@
                     <input id="us" value="us" type="radio" name="tempUnits">
                 </div>
             
-                <label for="autoComplete" class="visuallyhidden">destination:</label>
-                <input id="autoComplete" type="search" required>
+                <div class="inputWrapper">
+                    <label class="visuallyhidden" for="autoComplete">Destination:</label>
+                    <input id="autoComplete" type="search" required>
+                </div>
             
                 <div class="datesWrapper">
                     <div class="inputWrapper">
@@ -60,6 +63,7 @@
             <div class="results"></div>
 
             <!-- list to display packing list -->
+            <p>We suggest you bring:</p>
             <ul class="wardrobeList"></ul>
             <a id="reset" href="#">Explore new place</a>
         </div>

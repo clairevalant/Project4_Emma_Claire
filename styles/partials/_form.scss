@@ -31,15 +31,15 @@ input[type=date] {
 
 input[type=submit] {
     border: none;
-    width: 100%;
     padding: 10px 20px;
 }
 
+input[type=submit],
 .datesWrapper {
     width: 100%;
 }
 
+// something about google autocomplete makes this input size strangely, but using vw oddly fixes it
 #autoComplete {
-    width: 100%;
-    padding: 10px 0;
+    width: 100vw;
 }
