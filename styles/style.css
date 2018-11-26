@@ -328,6 +328,40 @@ input[type=submit],
 #autoComplete {
   width: 100vw; }
 
+.gallery {
+  height: 40vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center; }
+
+.img1 {
+  width: 33.3vw;
+  background: url("../assets/egypt.jpg");
+  background-position: center;
+  background-size: cover; }
+
+.img2 {
+  width: 33.3vw;
+  background: url("../assets/skating.jpg");
+  background-position: center;
+  background-size: cover; }
+
+.img3 {
+  width: 33.3vw;
+  background: url("../assets/riceField.jpg");
+  background-position: center;
+  background-size: cover; }
+
 @media only screen and (min-width: 470px) {
   footer .wrapper {
     display: -webkit-box;
